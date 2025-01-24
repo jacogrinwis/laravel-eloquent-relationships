@@ -38,6 +38,11 @@ class Product extends Model
         return $this->belongsToMany(Material::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
     public function GetDiscountPriceAttribute()
     {
         if ($this->discount > 0) {

@@ -12,9 +12,7 @@
         Binnenkort leverbaar
     </span>
 @elseif ($status === 'low_stock')
-    <span
-        class="rounded bg-orange-100 px-2.5 py-0.5 text-xs font-bold text-orange-800 dark:bg-orange-900 dark:text-orange-300"
-    >
+    <span class="rounded bg-red-100 px-2.5 py-0.5 text-xs font-bold text-red-800 dark:bg-red-900 dark:text-red-300">
         Bijna uitverkocht
     </span>
 @elseif ($status === 'out_of_stock')

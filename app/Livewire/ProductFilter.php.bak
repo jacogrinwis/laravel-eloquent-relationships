@@ -7,7 +7,6 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\Material;
-use Illuminate\Support\Facades\DB;
 
 class ProductFilter extends Component
 {

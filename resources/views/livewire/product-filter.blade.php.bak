@@ -5,7 +5,10 @@
 <div class="container mx-auto max-w-7xl p-4">
     <div class="grid grid-cols-4 gap-12">
         <aside class="col-span-1 space-y-6 text-sm">
-            @if (count($selectedCategories) > 0 || count($selectedColors) > 0 || count($selectedMaterials) > 0)
+            @if (count($selectedCategories) > 0 ||
+                    count($selectedColors) > 0 ||
+                    count($selectedMaterials) > 0 ||
+                    count($selectedStockStatuses) > 0)
                 <section>
                     <div class="mb-2 flex items-center justify-between">
                         <h3 class="text-lg font-semibold">Actieve filters:</h3>
@@ -107,7 +110,7 @@
                         class="flex cursor-pointer items-center gap-2 text-lg font-semibold"
                         @click="open = !open"
                     >
-                        <span>Categories ({{ $categories->count() }})</span>
+                        <span>Categorieën ({{ $categories->count() }})</span>
                         <svg
                             class="h-5 w-5 transition-transform duration-200"
                             :class="{ 'rotate-180': open }"
@@ -139,7 +142,6 @@
                                     wire:model.live="selectedCategories"
                                     value="{{ $category->id }}"
                                 >
-                                {{-- <label for="category-{{ $category->id }}"> --}}
                                 {{ $category->name }} ({{ $category->products_count }})
                             </label>
                         </div>
@@ -149,7 +151,7 @@
                             wire:click="$toggle('showAllCategories')"
                             class="text-sm font-semibold text-blue-600"
                         >
-                            {{ $showAllCategories ? 'Show less' : 'Show more (' . ($categories->count() - 5) . ')' }}
+                            {{ $showAllCategories ? 'Toon minder' : 'Toon meer (' . ($categories->count() - 5) . ')' }}
                         </button>
                     @endif
                 </div>
@@ -161,7 +163,7 @@
                         class="flex cursor-pointer items-center gap-2 text-lg font-semibold"
                         @click="open = !open"
                     >
-                        <span>Colors ({{ $colors->count() }})</span>
+                        <span>Kleuren ({{ $colors->count() }})</span>
                         <svg
                             class="h-5 w-5 transition-transform duration-200"
                             :class="{ 'rotate-180': open }"
@@ -193,7 +195,9 @@
                                     wire:model.live="selectedColors"
                                     value="{{ $color->id }}"
                                 >
-                                {{-- <label for="color-{{ $color->id }}"> --}}
+                                <span
+                                    class="bg-{{ $color->tailwind_color }}{{ !in_array($color->tailwind_color, ['white', 'black']) ? '-500' : '' }} {{ $color->tailwind_color == 'white' ? 'border border-gray-300' : '' }} size-3 rounded-full"
+                                ></span>
                                 {{ $color->name }} ({{ $color->products_count }})
                             </label>
                         </div>
@@ -203,7 +207,7 @@
                             wire:click="$toggle('showAllColors')"
                             class="text-sm font-semibold text-blue-600"
                         >
-                            {{ $showAllColors ? 'Show less' : 'Show more (' . ($colors->count() - 5) . ')' }}
+                            {{ $showAllColors ? 'Toon minder' : 'Toon meer (' . ($colors->count() - 5) . ')' }}
                         </button>
                     @endif
                 </div>
@@ -215,7 +219,7 @@
                         class="flex cursor-pointer items-center gap-2 text-lg font-semibold"
                         @click="open = !open"
                     >
-                        <span>Materials ({{ $materials->count() }})</span>
+                        <span>Materialen ({{ $materials->count() }})</span>
                         <svg
                             class="h-5 w-5 transition-transform duration-200"
                             :class="{ 'rotate-180': open }"
@@ -248,7 +252,6 @@
                                     value="{{ $material->id }}"
                                     class="form-check-input"
                                 >
-                                {{-- <label for="material-{{ $material->id }}"> --}}
                                 {{ $material->name }} ({{ $material->products_count }})
                             </label>
                         </div>
@@ -258,7 +261,7 @@
                             wire:click="$toggle('showAllMaterials')"
                             class="text-sm font-semibold text-blue-600"
                         >
-                            {{ $showAllMaterials ? 'Show less' : 'Show more (' . ($materials->count() - 5) . ')' }}
+                            {{ $showAllMaterials ? 'Toon minder' : 'Toon meer (' . ($materials->count() - 5) . ')' }}
                         </button>
                     @endif
                 </div>
@@ -296,7 +299,6 @@
                                     wire:model.live="selectedStockStatuses"
                                     value="{{ $value }}"
                                 >
-                                {{-- <label for="stock-{{ $value }}"> --}}
                                 {{ $label }} ({{ $stockStatusCounts[$value] ?? 0 }})
                             </label>
                         </div>
@@ -330,13 +332,9 @@
                                 <div class="h-14">
                                     <h2 class="line-clamp-2 text-xl font-semibold">{{ $product->name }}</h2>
                                 </div>
-                                {{-- <p>Price: ${{ $product->price }}</p> --}}
-
                                 <div>
                                     <x-products.stock-status :status="$product->stock_status" />
                                 </div>
-
-
                                 <div class="mb-2 grid h-14 grid-cols-2 gap-2">
                                     <div class="grid items-end">
                                         @if ($product->discount > 0)
@@ -356,40 +354,6 @@
                                         <x-products.add-to-cart-button :disabled="$product->stock_status === 'out_of_stock' ? true : false" />
                                     </div>
                                 </div>
-
-
-
-                                {{-- <div class="mb-2 grid h-14 grid-cols-2 gap-2">
-                                    <div class="grid items-end">
-                                        @if ($product->discount)
-                                            <p class="text-base text-gray-500 line-through">
-                                                {{ formatPrice($product->price) }}
-                                            </p>
-                                            <p class="text-xl font-bold text-red-600">
-                                                {{ formatPrice($product->discount_price) }}
-                                            </p>
-                                        @elseif (!$product->discount)
-                                            <p class="text-xl font-bold">{{ formatPrice($product->price) }}</p>
-                                        @endif
-                                    </div>
-                                    <div class="grid items-end justify-end">
-                                        <x-products.add-to-cart-button
-                                            :product="$product"
-                                            :disabled="$product->stock_status === 2"
-                                        />
-                                    </div>
-                                </div> --}}
-
-
-
-
-
-
-                                {{-- <div class="mt-2">
-                                    <small class="text-muted">
-                                        Category: {{ $product->category->name }}
-                                    </small>
-                                </div> --}}
                             </div>
                         </div>
                     </div>

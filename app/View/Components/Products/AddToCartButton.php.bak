@@ -10,20 +10,28 @@ use Illuminate\Contracts\View\View;
 class AddToCartButton extends Component
 {
     public $product;
-    public $isDisabled;
+    public $disabled;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($product)
+    public function __construct($product, $disabled = false)
     {
-        DB::enableQueryLog();
+        // DB::enableQueryLog();
 
+        // $this->product = $product;
+        // // $this->isDisabled = $product->stock_status === 'out_of_stock';
+        // $this->isDisabled = data_get($product, 'stock_status') === 'out_of_stock';
+
+        // dd(DB::getQueryLog());
+        // dd($product->id);
         $this->product = $product;
-        // $this->isDisabled = $product->stock_status === 'out_of_stock';
-        $this->isDisabled = data_get($product, 'stock_status') === 'out_of_stock';
+        $this->disabled = $disabled;
+    }
 
-        dd(DB::getQueryLog());
+    public function addToCart($productId)
+    {
+        dd($productId);
     }
 
     /**
