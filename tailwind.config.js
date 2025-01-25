@@ -1,4 +1,5 @@
 import defaultTheme from "tailwindcss/defaultTheme";
+import plugin from "tailwindcss/plugin";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -46,5 +47,57 @@ export default {
             },
         },
     },
-    plugins: [require("flowbite/plugin")],
+    plugins: [
+        require("flowbite/plugin"),
+        plugin(function ({ addVariant, addUtilities }) {
+            addVariant("popover-open", "&:popover-open");
+            addVariant("starting", "@starting-style");
+            addVariant("dialog-open", "&[open]");
+            addVariant("dialog-not-open", "&:not([open])");
+            addVariant("scrollbar", "&::-webkit-scrollbar");
+            addVariant("scrollbar-thumb", "&::-webkit-scrollbar-thumb");
+            addVariant("scrollbar-track", "&::-webkit-scrollbar-track");
+            addUtilities({
+                ".transition-discrete": {
+                    transitionBehavior: "allow-discrete",
+                },
+                ".scrollbar-thumb-radius-4": {
+                    "&::-webkit-scrollbar-thumb": {
+                        "border-radius": "4px",
+                        "background-color": "#ccc",
+                    },
+                },
+                ".scrollbar-thumb-radius-8": {
+                    "&::-webkit-scrollbar-thumb": {
+                        "border-radius": "8px",
+                        "background-color": "#ccc",
+                    },
+                },
+                ".scrollbar-width-2": {
+                    "&::-webkit-scrollbar": {
+                        width: "2px",
+                        height: "2px",
+                    },
+                },
+                ".scrollbar-width-4": {
+                    "&::-webkit-scrollbar": {
+                        width: "4px",
+                        height: "4px",
+                    },
+                },
+                ".scrollbar-width-6": {
+                    "&::-webkit-scrollbar": {
+                        width: "6px",
+                        height: "6px",
+                    },
+                },
+                ".gap-scroll": {
+                    gap: "1rem",
+                    "&:has(> section::-webkit-scrollbar)": {
+                        gap: "10.5rem",
+                    },
+                },
+            });
+        }),
+    ],
 };

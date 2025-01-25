@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Livewire\Ui;
+
+use Livewire\Component;
+use Illuminate\Support\Facades\Route;
+
+class Breadcrumb extends Component
+{
+    public $breadcrumbs = [];
+
+    public function mount()
+    {
+        $this->generateBreadcrumbs();
+    }
+
+    public function generateBreadcrumbs()
+    {
+        $routeName = Route::currentRouteName();
+        $currentRoute = Route::current();
+        $breadcrumbLinks = [];
+
+        $breadcrumbLinks[] = [
+            'name' => 'Home',
+            'url' => route('home'),
+        ];
+
+        if ($routeName === 'products.list') {
+            $breadcrumbLinks[] = [
+                'name' => 'Products',
+                'url' => route('products.list'),
+            ];
+        }
+
+        if ($routeName === 'product.detail') {
+            $breadcrumbLinks[] = [
+                'name' => 'Products',
+                'url' => route('products.detail'),
+            ];
+
+            $product = $currentRoute->parameter('product');
+
+            $breadcrumbLinks[] = [
+                'name' => $product->name,
+                'url' => route('products.detail', ['product' => $product->slug]),
+            ];
+        }
+
+        $this->breadcrumbs = $breadcrumbLinks;
+    }
+
+    public function render()
+    {
+        return view('livewire.ui.breadcrumb');
+    }
+}

@@ -1,8 +1,9 @@
-@props(['class' => 'size-6 text-gray-800 dark:text-white'])
+{{-- @props(['class' => 'size-6 text-gray-800 dark:text-white']) --}}
 
 <svg
     {{-- {{ $attributes->twMerge(['size-6 text-gray-800 dark:text-white']) }} --}}
-    {{ $attributes->twMerge($class) }}
+    {{ $attributes->merge(['class' => 'size-6 text-gray-800 dark:text-white']) }}
+    {{-- {{ $attributes->twMerge($class) }} --}}
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
