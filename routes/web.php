@@ -11,5 +11,5 @@ Route::get('/', function () {
 
 Route::prefix('producten')->name('producten.')->group(function () {
     Route::get('/', App\Livewire\Pages\Products\ProductList::class)->name('list');
-    Route::get('/{product}', App\Livewire\Pages\Products\ProductDetail::class)->name('detail');
+    Route::get('/{product:slug}', App\Livewire\Pages\Products\ProductDetail::class)->name('detail');
 });

@@ -7,6 +7,7 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\Material;
+use Livewire\Attributes\Url;
 
 class ProductList extends Component
 {
@@ -52,7 +53,7 @@ class ProductList extends Component
 
     public function render()
     {
-        $query = Product::select(['id', 'name', 'cover', 'price', 'discount', 'discount_price', 'stock_status', 'category_id'])->with(['category', 'colors', 'materials']);
+        $query = Product::select(['id', 'name', 'slug', 'cover', 'price', 'discount', 'discount_price', 'stock_status', 'category_id'])->with(['category', 'colors', 'materials']);
 
         $baseQuery = Product::query();
 

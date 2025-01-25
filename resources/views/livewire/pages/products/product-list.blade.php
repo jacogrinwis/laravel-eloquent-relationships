@@ -322,7 +322,7 @@
                             class="space-y-2 rounded border border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg">
                             <div class="card-body">
                                 <a
-                                    href="{{ route('producten.detail', $product->id) }}"
+                                    href="{{ route('producten.detail', ['product' => $product->slug]) }}"
                                     wire:navigate
                                 >
                                     <figure class="relative">
@@ -338,16 +338,16 @@
                                                 ></span>
                                             @endforeach
                                         </div>
-                                        <span
+                                        {{-- <span
                                             class="absolute left-2 top-2 min-w-10 rounded-full bg-black/50 p-1 text-center text-white"
                                         >
                                             {{ $product->images->count() }}
-                                        </span>
+                                        </span> --}}
                                     </figure>
                                 </a>
                                 <div class="h-14">
                                     <a
-                                        href="{{ route('producten.detail', $product->id) }}"
+                                        href="{{ route('producten.detail', ['product' => $product->slug]) }}"
                                         wire:navigate
                                     >
                                         <h2 class="line-clamp-2 text-xl font-semibold">{{ $product->name }}</h2>

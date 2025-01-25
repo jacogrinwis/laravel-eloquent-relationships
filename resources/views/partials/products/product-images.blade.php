@@ -72,7 +72,12 @@
                         src="{{ asset($image->url) }}"
                         @mouseenter="activeIndex = {{ $index }}"
                         alt="{{ $product->name }}"
-                        class="aspect-square size-full cursor-pointer rounded-lg border object-cover shadow-sm"
+                        {{-- class="aspect-square size-full cursor-pointer rounded-lg border object-cover shadow-sm" --}}
+                        :class="{
+                            'aspect-square size-full cursor-pointer rounded-lg border-4 object-cover shadow-sm': true,
+                            'border-gray-300 border-double': activeIndex === {{ $index }},
+                            'border-gray-100': activeIndex !== {{ $index }}
+                        }"
                     >
                 </figure>
             @endforeach
@@ -88,7 +93,7 @@
                     @mouseenter="activeIndex = index"
                     :class="{
                         'bg-black': activeIndex === index,
-                        'bg-black/25 hover:bg-white': activeIndex !==
+                        'bg-gray-300 hover:bg-white': activeIndex !==
                             index
                     }"
                     class="mx-1 h-4 w-4 rounded-full focus:outline-none"

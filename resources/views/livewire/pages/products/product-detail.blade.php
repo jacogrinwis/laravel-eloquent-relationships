@@ -7,7 +7,7 @@
     <main>
         <div class="grid grid-cols-12 gap-6">
             <div class="col-span-7">
-                @include('partials.carrousel')
+                @include('partials.products.product-images')
             </div>
             <div class="col-span-5 space-y-6 rounded border p-6 shadow-sm">
                 <div>
@@ -49,19 +49,29 @@
                         <span>In winkelwagen</span>
                     </button>
                     <button
-                        class="group inline-flex h-10 items-center items-center rounded-md bg-white text-lg font-semibold transition-all duration-300"
+                        class="group inline-flex h-10 items-center rounded-md bg-white text-lg font-semibold transition-all duration-300"
                     >
                         <x-icons.solid.hart
-                            class="size-8 text-gray-400 transition-all duration-300 group-hover:text-red-500"
+                            class="size-8 stroke-gray-500 text-transparent transition-all duration-300 group-hover:stroke-red-500 group-hover:text-red-500"
                         />
                     </button>
                 </div>
                 <div class="space-x-1">
+                    <h4 class="mb-1 text-base font-semibold">Kleur:</h4>
                     @foreach ($product->colors as $color)
                         <span
                             class="bg-{{ $color->tailwind_color }}{{ !in_array($color->tailwind_color, ['white', 'black']) ? '-500' : '' }} {{ !in_array($color->tailwind_color, ['white']) ? '' : 'border border-gray-300' }} inline-block size-6 rounded-full shadow-sm"
                         ></span>
                     @endforeach
+                </div>
+
+                <div>
+                    <h4 class="mb-1 text-base font-semibold">Materiaal:</h4>
+                    <div>
+                        @foreach ($product->materials as $material)
+                            {{ $material->name }}{{ !$loop->last ? ',' : '' }}
+                        @endforeach
+                    </div>
                 </div>
 
                 {{-- <div
